@@ -1,5 +1,5 @@
-﻿using QBitTorrentPortForwardSetterViaPVPN;
-using QBitTorrentPortForwardSetterViaPVPN.Constants;
+﻿using QBitTorrentPortForwardSetterViaPVPN.Constants;
+using QBitTorrentPortForwardSetterViaPVPN.Helpers;
 using QBitTorrentPortForwardSetterViaPVPN.Services;
 using System.Diagnostics;
 

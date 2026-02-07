@@ -1,4 +1,5 @@
 ﻿using QBitTorrentPortForwardSetterViaPVPN.Constants;
+using QBitTorrentPortForwardSetterViaPVPN.Helpers;
 using System.Text.RegularExpressions;
 
 namespace QBitTorrentPortForwardSetterViaPVPN.Services

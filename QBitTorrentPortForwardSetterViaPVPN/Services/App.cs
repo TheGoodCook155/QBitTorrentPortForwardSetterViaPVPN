@@ -6,14 +6,20 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
         private readonly PvpnLogCopy logCopy;
         private readonly PvpnFolderMonitor folderMonitor;
         private readonly PortForwardingFinder portForwardingFinder;
+        private readonly QBitTorrentUserRetriever userRetriever;
+        private readonly QBitTorrentCommander commander;
 
         public App(PvpnLogCopy logCopy,
             PvpnFolderMonitor folderMonitor,
-            PortForwardingFinder portForwardingFinder)
+            PortForwardingFinder portForwardingFinder,
+            QBitTorrentUserRetriever userRetriever,
+            QBitTorrentCommander commander)
         {
             this.logCopy = logCopy;
             this.folderMonitor = folderMonitor;
             this.portForwardingFinder = portForwardingFinder;
+            this.userRetriever = userRetriever;
+            this.commander = commander;
         }
 
         public async Task Run()
@@ -22,10 +28,13 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
             while (folderMonitor.isAlive)
             {
-                // Get th port via service
                 string newPort = this.portForwardingFinder.GetForwardedPort();
 
-                //Asign the port to QbitTorrent
+                this.userRetriever.GetQbitTorrentUserCredentials();
+
+                await this.commander.LoginToQBitTorrent();
+
+                await this.commander.SetForwardedPort();
 
                 await Task.Delay(20000);
             }

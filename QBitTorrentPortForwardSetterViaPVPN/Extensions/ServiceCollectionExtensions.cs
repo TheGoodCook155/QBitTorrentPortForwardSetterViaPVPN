@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using QBitTorrentPortForwardSetterViaPVPN.Constants;
+using QBitTorrentPortForwardSetterViaPVPN.Helpers;
 using QBitTorrentPortForwardSetterViaPVPN.Services;
 
 namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
@@ -52,5 +53,10 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
             return @this;   
         }
 
+        public static ServiceCollection AddQbitTorrentCommander(this ServiceCollection @this)
+        {
+            @this.AddScoped<QBitTorrentCommander>();
+            return @this;
+        }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace QBitTorrentPortForwardSetterViaPVPN
+namespace QBitTorrentPortForwardSetterViaPVPN.Helpers
 {
     public class LogsHelper
     {
