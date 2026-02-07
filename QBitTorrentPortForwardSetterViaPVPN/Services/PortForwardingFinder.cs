@@ -24,7 +24,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
         private string[] GetLogFiles()
         {
-            string path = pathConstants.PvpnLogsPath;
+            string path = pathConstants.ProjectPath;
             
             string[] allFiles = logHelper.RetrieveLogs(path);
 
