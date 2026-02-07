@@ -22,12 +22,13 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             this.commander = commander;
         }
 
+
         public async Task Run()
         {
-            logCopy.CopyLogsToProject();
-
             while (folderMonitor.isAlive)
             {
+                logCopy.CopyLogsToProject();
+
                 string newPort = this.portForwardingFinder.GetForwardedPort();
 
                 this.userRetriever.GetQbitTorrentUserCredentials();

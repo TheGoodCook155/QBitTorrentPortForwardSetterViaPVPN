@@ -46,7 +46,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
                     foreach (string line in lines)
                     {
-                        if (line.Contains("Port forwarding port changed"))
+                        if (line.Contains(GeneralConstants.PvpnLogPortEntry))
                         {
                             allPortEntries.Add(line);
                         }
@@ -63,10 +63,11 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             if (string.IsNullOrEmpty(lastPortEntry))
             {
                 Console.WriteLine("No port change entries found.");
-                return null;
+
+                return string.Empty;
             }
 
-            Match match = Regex.Match(lastPortEntry, @"from '(\d*)' to '(\d+)'");
+            Match match = Regex.Match(lastPortEntry, @"from '(\d*)' to '(\d*)'");
 
             string oldPort = string.Empty;
 

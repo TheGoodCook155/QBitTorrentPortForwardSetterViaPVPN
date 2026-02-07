@@ -28,13 +28,19 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             this.watcher = new FileSystemWatcher
             {
                 Path = folderPath,
-                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName,
-                Filter = "*.txt"
+                Filter = "*.txt",
+                IncludeSubdirectories = false,
+                NotifyFilter = NotifyFilters.LastWrite |
+                          NotifyFilters.FileName |
+                          NotifyFilters.Size,
+                EnableRaisingEvents = true
             };
 
-            this.SubscribeToEvents(watcher);
 
-            watcher.EnableRaisingEvents = true;
+            Console.WriteLine($"Monitoring folder: {folderPath}");
+            Console.WriteLine($"Filter: {watcher.Filter}");
+
+            this.SubscribeToEvents(watcher);
         }
 
         private void OnFileChanged(object source, FileSystemEventArgs e)
