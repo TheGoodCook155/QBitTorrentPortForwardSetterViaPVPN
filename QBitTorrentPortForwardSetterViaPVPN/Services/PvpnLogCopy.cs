@@ -3,7 +3,7 @@ using QBitTorrentPortForwardSetterViaPVPN.Helpers;
 using QBitTorrentPortForwardSetterViaPVPN.Services;
 using System.Diagnostics;
 
-public class PvpnLogCopy : IDisposable
+public class PvpnLogCopy
 {
     private string source;
     private string destination;
@@ -109,7 +109,6 @@ public class PvpnLogCopy : IDisposable
                 }
 
                 int exitCode = process.ExitCode;
-                Console.WriteLine($"XCopy completed with exit code: {exitCode}");
 
                 if (exitCode != 0 && exitCode != 1)
                 {
@@ -128,8 +127,9 @@ public class PvpnLogCopy : IDisposable
         this.folderMonitor.OnLogsChanged -= FolderMonitor_OnLogsChanged;
     }
 
-    public void Dispose()
+    public void Stop()
     {
         this.UnsubscribeToEvents();
     }
+
 }

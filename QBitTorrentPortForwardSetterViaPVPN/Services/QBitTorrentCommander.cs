@@ -53,12 +53,12 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error while logging to QBitTorrent Client");
+                Console.WriteLine("Error while logging to qBittorrent Client");
             }
 
             var result = await response.Content.ReadAsStringAsync();
 
-            Console.WriteLine($"Result code: {result}");
+            Console.WriteLine($"Log in to qBittorrent Succesfull | Result code: {result}");
         }
 
         public async Task SetForwardedPort()
@@ -81,12 +81,12 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             }
             catch (Exception ex) 
             {
-                Console.WriteLine("Error while assigning new port to QBitTorrent Client");            
+                Console.WriteLine("Error while assigning new port to qBittorrent Client");            
             }
 
             var result = await response.Content.ReadAsStringAsync();
 
-            Console.WriteLine($"Result code: {result}");
+            Console.WriteLine($"Port set in qBittorrent Result code: {result}");
 
         }
     }

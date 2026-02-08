@@ -3,19 +3,16 @@ using QBitTorrentPortForwardSetterViaPVPN.Constants;
 
 namespace QBitTorrentPortForwardSetterViaPVPN.Services
 {
-    public class PvpnFolderMonitor : IDisposable
+    public class PvpnFolderMonitor
     {
         private FileSystemWatcher watcher;
         private PathConstants pathConstants;
         private string folderPath;
         public event EventHandler OnLogsChanged;
-        public bool isAlive = true;
 
 
         public PvpnFolderMonitor( PathConstants pathConstants)
         {
-            Console.WriteLine("PvpnFolder monitor instantiated");
-
             this.pathConstants = pathConstants;
 
             folderPath = pathConstants.PvpnLogsPath;
@@ -36,9 +33,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
                 EnableRaisingEvents = true
             };
 
-
             Console.WriteLine($"Monitoring folder: {folderPath}");
-            Console.WriteLine($"Filter: {watcher.Filter}");
 
             this.SubscribeToEvents(watcher);
         }
@@ -53,15 +48,13 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             this.OnLogsChanged.Invoke(this, e);
         }
 
-        private void Stop()
+        public void Stop()
         {
             watcher.EnableRaisingEvents = false;
 
             this.UnsubscribeToEvents(watcher);
 
             watcher.Dispose();
-
-            this.isAlive = false;
         }
 
         private void UnsubscribeToEvents(FileSystemWatcher watcher)
@@ -76,12 +69,6 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             watcher.Changed += OnFileChanged;
 
             watcher.Created += OnFileCreated;
-        }
-
-        public void Dispose()
-        {
-            Console.WriteLine("PvpnFolderMonitor disposed");
-           this.Stop();
         }
     }
 }

@@ -9,6 +9,8 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
         private readonly QBitTorrentUserRetriever userRetriever;
         private readonly QBitTorrentCommander commander;
 
+        private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
         public App(PvpnLogCopy logCopy,
             PvpnFolderMonitor folderMonitor,
             PortForwardingFinder portForwardingFinder,
@@ -22,10 +24,24 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             this.commander = commander;
         }
 
+        private void Cleanup()
+        {
+            folderMonitor.Stop();
+            this.logCopy.Stop();
+        }
 
         public async Task Run()
         {
-            while (folderMonitor.isAlive)
+
+            Console.CancelKeyPress += (sender, e) =>
+            {
+                Console.WriteLine("Shutting down...");
+                cancellationTokenSource.Cancel();
+                e.Cancel = true;
+                this.Cleanup();
+            };
+
+            while (!cancellationTokenSource.Token.IsCancellationRequested)
             {
                 logCopy.CopyLogsToProject();
 
@@ -37,11 +53,10 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
                 await this.commander.SetForwardedPort();
 
-                await Task.Delay(20000);
+                await Task.Delay(10000);
             }
 
             Console.WriteLine("Done");
-
         }
     }
 }
