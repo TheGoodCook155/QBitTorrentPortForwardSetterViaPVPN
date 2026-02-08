@@ -28,7 +28,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
             this.httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri("http://localhost:8080")
+                BaseAddress = new Uri(QBitTorrentConstants.BaseAddress)
             };
         }
 
