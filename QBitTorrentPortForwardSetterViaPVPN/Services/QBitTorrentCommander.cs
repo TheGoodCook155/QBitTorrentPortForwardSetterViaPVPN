@@ -44,21 +44,21 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
             var content = new FormUrlEncodedContent(formData);
 
-            HttpResponseMessage response = await httpClient.PostAsync(QBitTorrentConstants.LoginEndpoint, content);
-            
             try
             {
+                HttpResponseMessage response = await httpClient.PostAsync(QBitTorrentConstants.LoginEndpoint, content);
+            
                 response.EnsureSuccessStatusCode();
 
+                var result = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine($"Log in to qBittorrent Succesfull | Result code: {result}");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error while logging to qBittorrent Client");
             }
 
-            var result = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine($"Log in to qBittorrent Succesfull | Result code: {result}");
         }
 
         public async Task SetForwardedPort()
@@ -72,21 +72,21 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
             var content = new FormUrlEncodedContent(formData);
 
-            HttpResponseMessage response = await httpClient.PostAsync(QBitTorrentConstants.SetPreferencesEndpoint, content);
-
             try
             {
+                HttpResponseMessage response = await httpClient.PostAsync(QBitTorrentConstants.SetPreferencesEndpoint, content);
+
                 response.EnsureSuccessStatusCode();
+
+                var result = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine($"Port set in qBittorrent Result code: {result}");
 
             }
             catch (Exception ex) 
             {
                 Console.WriteLine("Error while assigning new port to qBittorrent Client");            
             }
-
-            var result = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine($"Port set in qBittorrent Result code: {result}");
 
         }
     }

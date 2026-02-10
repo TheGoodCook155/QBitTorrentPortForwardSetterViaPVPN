@@ -47,6 +47,12 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
                 string newPort = this.portForwardingFinder.GetForwardedPort();
 
+                if (string.IsNullOrEmpty(newPort))
+                {
+                    await Task.Delay(10000);
+                    continue;
+                }
+
                 this.userRetriever.GetQbitTorrentUserCredentials();
 
                 await this.commander.LoginToQBitTorrent();
