@@ -8,6 +8,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
         private readonly PortForwardingFinder portForwardingFinder;
         private readonly QBitTorrentUserRetriever userRetriever;
         private readonly QBitTorrentCommander commander;
+        private string oldAssignedPort = string.Empty;
 
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
@@ -53,11 +54,23 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
                     continue;
                 }
 
+                if (oldAssignedPort != newPort)
+                {
+                    Console.WriteLine($"Last port change found: {oldAssignedPort} -> {newPort}");
+
+                    oldAssignedPort = newPort;
+                }
+                else
+                {
+                    await Task.Delay(10000);
+                    continue;
+                }
+
                 this.userRetriever.GetQbitTorrentUserCredentials();
 
                 await this.commander.LoginToQBitTorrent();
 
-                await this.commander.SetForwardedPort();
+                await this.commander.SetForwardedPort(newPort);
 
                 await Task.Delay(10000);
             }

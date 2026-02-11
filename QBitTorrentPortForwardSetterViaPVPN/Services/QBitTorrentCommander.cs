@@ -50,9 +50,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             
                 response.EnsureSuccessStatusCode();
 
-                var result = await response.Content.ReadAsStringAsync();
-
-                Console.WriteLine($"Log in to qBittorrent Succesfull | Result code: {result}");
+                Console.WriteLine($"Log in to qBittorrent Succesfull");
             }
             catch (Exception ex)
             {
@@ -61,10 +59,8 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
         }
 
-        public async Task SetForwardedPort()
+        public async Task SetForwardedPort(string port)
         {
-            string port = this.portForwardingFinder.GetForwardedPort();
-
             Dictionary<string, string> formData = new Dictionary<string, string>()
             {
                 { "json", $"{{\"listen_port\":{port}}}" }
@@ -78,9 +74,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
                 response.EnsureSuccessStatusCode();
 
-                var result = await response.Content.ReadAsStringAsync();
-
-                Console.WriteLine($"Port set in qBittorrent Result code: {result}");
+                Console.WriteLine($"Port set in qBittorrent!");
 
             }
             catch (Exception ex) 

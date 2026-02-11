@@ -78,7 +78,6 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
                 oldPort = match.Groups[1].Value;
                 newPort = match.Groups[2].Value;
 
-                Console.WriteLine($"Last port change found: {oldPort} -> {newPort}");
                 return newPort;
             }
 
