@@ -1,4 +1,7 @@
 ﻿
+using QBitTorrentPortForwardSetterViaPVPN.Constants;
+using System.Runtime.CompilerServices;
+
 namespace QBitTorrentPortForwardSetterViaPVPN.Services
 {
     public class App
@@ -8,6 +11,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
         private readonly PortForwardingFinder portForwardingFinder;
         private readonly QBitTorrentUserRetriever userRetriever;
         private readonly QBitTorrentCommander commander;
+        private readonly PathConstants pathConstants;
 
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
@@ -15,23 +19,57 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             PvpnFolderMonitor folderMonitor,
             PortForwardingFinder portForwardingFinder,
             QBitTorrentUserRetriever userRetriever,
-            QBitTorrentCommander commander)
+            QBitTorrentCommander commander,
+            PathConstants pathConstants)
         {
             this.logCopy = logCopy;
             this.folderMonitor = folderMonitor;
             this.portForwardingFinder = portForwardingFinder;
             this.userRetriever = userRetriever;
             this.commander = commander;
+            this.pathConstants = pathConstants;
+        }
+
+        private void InitFolderMonitor()
+        {
+            this.folderMonitor.InitWatcher(pathConstants.PvpnLogsPath);
+        }
+
+        private void SubscribeToFolderMonitor()
+        {
+            this.folderMonitor.OnLogsChanged += FolderMonitor_OnLogsChanged;
+        }
+
+        private async Task FolderMonitor_OnLogsChanged(object obj, FileSystemEventArgs args)
+        {
+            logCopy.CopyLogsToProject();
+
+            string newPort = this.portForwardingFinder.GetForwardedPort();
+
+            if (string.IsNullOrEmpty(newPort))
+            {
+                return;
+            }
+
+            this.userRetriever.GetQbitTorrentUserCredentials();
+
+            await this.commander.LoginToQBitTorrent();
+
+            await this.commander.SetForwardedPort(newPort);
         }
 
         private void Cleanup()
         {
             folderMonitor.Stop();
-            this.logCopy.Stop();
+            this.folderMonitor.OnLogsChanged -= FolderMonitor_OnLogsChanged;
         }
 
         public async Task Run()
         {
+
+            this.InitFolderMonitor();
+
+            this.SubscribeToFolderMonitor();
 
             Console.CancelKeyPress += (sender, e) =>
             {
@@ -43,26 +81,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
             while (!cancellationTokenSource.Token.IsCancellationRequested)
             {
-                logCopy.CopyLogsToProject();
-
-                string newPort = this.portForwardingFinder.GetForwardedPort();
-
-                if (string.IsNullOrEmpty(newPort))
-                {
-                    await Task.Delay(10000);
-                    continue;
-                }
-
-                this.userRetriever.GetQbitTorrentUserCredentials();
-
-                await this.commander.LoginToQBitTorrent();
-
-                await this.commander.SetForwardedPort();
-
-                await Task.Delay(10000);
             }
-
-            Console.WriteLine("Done");
         }
     }
 }

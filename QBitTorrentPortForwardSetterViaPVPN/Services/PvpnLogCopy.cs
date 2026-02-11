@@ -14,31 +14,16 @@ public class PvpnLogCopy
 
     private readonly PathConstants pathConstants;
     private readonly LogsHelper logHelpers;
-    private readonly PvpnFolderMonitor folderMonitor;
 
-    public PvpnLogCopy(PathConstants pathConstants, LogsHelper logsHelper, PvpnFolderMonitor folderMonitor)
+    public PvpnLogCopy(PathConstants pathConstants, LogsHelper logsHelper)
     {
         this.pathConstants = pathConstants;
 
         this.logHelpers = logsHelper;
 
-        this.folderMonitor = folderMonitor;
-
-        this.SubscribeToFolderMonitorChanges();
-
         this.InitSource();
 
         this.InitDestination(projectPath!);
-    }
-
-    private void SubscribeToFolderMonitorChanges()
-    {
-        this.folderMonitor.OnLogsChanged += FolderMonitor_OnLogsChanged;
-    }
-
-    private void FolderMonitor_OnLogsChanged(object? sender, EventArgs e)
-    {
-        this.CopyLogsToProject();
     }
 
     private void InitSource()
@@ -120,16 +105,6 @@ public class PvpnLogCopy
         {
             Console.WriteLine($"XCopy failed: {ex.Message}");
         }
-    }
-
-    private void UnsubscribeToEvents()
-    {
-        this.folderMonitor.OnLogsChanged -= FolderMonitor_OnLogsChanged;
-    }
-
-    public void Stop()
-    {
-        this.UnsubscribeToEvents();
     }
 
 }

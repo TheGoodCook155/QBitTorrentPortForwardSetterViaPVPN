@@ -8,7 +8,8 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
     {
 
         private readonly PathConstants pathConstants;
-        private readonly LogsHelper logHelper;  
+        private readonly LogsHelper logHelper;
+        private string oldSavedPort;
 
         public PortForwardingFinder(PathConstants pathConstants, LogsHelper logHelper)
         {
@@ -78,8 +79,14 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
                 oldPort = match.Groups[1].Value;
                 newPort = match.Groups[2].Value;
 
-                Console.WriteLine($"Last port change found: {oldPort} -> {newPort}");
-                return newPort;
+                if (this.oldSavedPort != newPort)
+                {
+                    Console.WriteLine($"Last port change found: {oldSavedPort} -> {newPort}");
+
+                    this.oldSavedPort = newPort;
+
+                    return newPort;
+                }
             }
 
             throw new Exception($"Could not parse port from entry:{lastPortEntry}");

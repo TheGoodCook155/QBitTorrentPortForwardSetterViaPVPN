@@ -61,10 +61,8 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
         }
 
-        public async Task SetForwardedPort()
+        public async Task SetForwardedPort(string port)
         {
-            string port = this.portForwardingFinder.GetForwardedPort();
-
             Dictionary<string, string> formData = new Dictionary<string, string>()
             {
                 { "json", $"{{\"listen_port\":{port}}}" }
