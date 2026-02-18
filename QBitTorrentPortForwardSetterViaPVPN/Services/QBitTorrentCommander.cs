@@ -10,15 +10,11 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
     {
         private readonly QBitTorrentUserRetriever userRetriever;
         private HttpClient httpClient;
-        private readonly PortForwardingFinder portForwardingFinder;
 
         public QBitTorrentCommander(
-        QBitTorrentUserRetriever userRetriever,
-        PortForwardingFinder portForwardingFinder)
+        QBitTorrentUserRetriever userRetriever)
         {
             this.userRetriever = userRetriever;
-
-            this.portForwardingFinder = portForwardingFinder;
 
             var handler = new HttpClientHandler
             {
@@ -52,7 +48,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
                 var result = await response.Content.ReadAsStringAsync();
 
-                Console.WriteLine($"Log in to qBittorrent Succesfull | Result code: {result}");
+                Console.WriteLine($"Log in to qBittorrent Succesfull");
             }
             catch (Exception ex)
             {
@@ -78,7 +74,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
                 var result = await response.Content.ReadAsStringAsync();
 
-                Console.WriteLine($"Port set in qBittorrent Result code: {result}");
+                Console.WriteLine($"Port set in qBittorrent");
 
             }
             catch (Exception ex) 

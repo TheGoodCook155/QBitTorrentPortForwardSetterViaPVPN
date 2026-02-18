@@ -12,6 +12,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
         private readonly QBitTorrentUserRetriever userRetriever;
         private readonly QBitTorrentCommander commander;
         private readonly PathConstants pathConstants;
+        private string oldAssignedPort = string.Empty;
 
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
@@ -49,6 +50,13 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             if (string.IsNullOrEmpty(newPort))
             {
                 return;
+            }
+
+            if (this.oldAssignedPort != newPort)
+            {
+                Console.WriteLine($"Last port change found: {oldAssignedPort} -> {newPort}");
+                
+                this.oldAssignedPort = newPort;
             }
 
             this.userRetriever.GetQbitTorrentUserCredentials();

@@ -9,7 +9,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
     {
         public static ServiceCollection AddApp(this ServiceCollection @this)
         {
-            @this.AddScoped<App>();
+            @this.AddSingleton<App>();
             return @this;
         }
 
@@ -29,7 +29,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
 
         public static ServiceCollection AddPvpnFolderMonitor(this ServiceCollection @this)
         {
-            @this.AddScoped<PvpnFolderMonitor>();
+            @this.AddSingleton<PvpnFolderMonitor>();
             return @this;
         }
 

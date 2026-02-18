@@ -70,13 +70,10 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
             Match match = Regex.Match(lastPortEntry, @"from '(\d*)' to '(\d*)'");
 
-            string oldPort = string.Empty;
-
             string newPort = string.Empty;
 
             if (match.Success)
             {
-                oldPort = match.Groups[1].Value;
                 newPort = match.Groups[2].Value;
 
                 if (this.oldSavedPort != newPort)
