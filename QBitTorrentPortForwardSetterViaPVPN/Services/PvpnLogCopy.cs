@@ -68,10 +68,10 @@ public class PvpnLogCopy
             return;
         }
   
-        CopyWithXCopy(allLogFiles, overwrite);
+        CopyWithXCopy(overwrite);
     }
 
-    private void CopyWithXCopy(string[] files, bool overwrite)
+    private void CopyWithXCopy(bool overwrite)
     {
         try
         {
