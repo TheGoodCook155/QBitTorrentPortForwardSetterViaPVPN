@@ -16,7 +16,9 @@
 
 #### After the port is assigned to you, you will have to manually enter the port in the qBittorrent client on each ProtonVPN server connect/reconnect.
 
-#### This application checks for port changes on every 10s, and sets the new port in the qBittorrent client.
+#### This application checks for port changes on every 10s, and sets the new port in the qBittorrent client *(main branch implementation)*.
+
+*Note: For event driven approach (the logic is executed on every log change), please checkout on the 'event-only-version' branch*.
 
 #### Tested with qBittorrent v5.1.0 and ProtonVPN v4.3.11
 
