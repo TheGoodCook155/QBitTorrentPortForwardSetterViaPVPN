@@ -6,13 +6,16 @@ using System.Diagnostics;
 public class PvpnLogCopy
 {
     private string source;
+
     private string destination;
+
     private string projectPath;
     public string SourceDirectory => source;
     public string DestinationDirectory => destination;
     public string ProjectPath => projectPath;
 
     private readonly PathConstants pathConstants;
+
     private readonly LogsHelper logHelpers;
 
     public PvpnLogCopy(PathConstants pathConstants, LogsHelper logsHelper)
@@ -39,6 +42,7 @@ public class PvpnLogCopy
         }
 
         this.destination = Path.Combine(projectPath, "VPN_Logs");
+
         this.projectPath = projectPath;
 
         Directory.CreateDirectory(destination);
@@ -83,13 +87,17 @@ public class PvpnLogCopy
                 process.StartInfo = processStartInfo;
 
                 process.Start();
+
                 process.BeginOutputReadLine();
+
                 process.BeginErrorReadLine();
 
                 if (!process.WaitForExit(60000))
                 {
                     process.Kill();
+
                     Console.WriteLine("XCopy timed out after 60 seconds.");
+
                     return;
                 }
 

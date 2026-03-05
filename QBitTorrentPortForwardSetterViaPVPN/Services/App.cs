@@ -24,10 +24,15 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             PathConstants pathConstants)
         {
             this.logCopy = logCopy;
+
             this.folderMonitor = folderMonitor;
+
             this.portForwardingFinder = portForwardingFinder;
+
             this.userRetriever = userRetriever;
+
             this.commander = commander;
+
             this.pathConstants = pathConstants;
         }
 
@@ -69,12 +74,12 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
         private void Cleanup()
         {
             folderMonitor.Stop();
+
             this.folderMonitor.OnLogsChanged -= FolderMonitor_OnLogsChanged;
         }
 
         public async Task Run()
         {
-
             this.InitFolderMonitor();
 
             this.SubscribeToFolderMonitor();

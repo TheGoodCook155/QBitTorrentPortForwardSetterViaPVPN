@@ -8,12 +8,15 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
     {
 
         private readonly PathConstants pathConstants;
+
         private readonly LogsHelper logHelper;
+
         private string oldSavedPort;
 
         public PortForwardingFinder(PathConstants pathConstants, LogsHelper logHelper)
         {
             this.pathConstants = pathConstants;
+
             this.logHelper = logHelper;
         }
 

@@ -9,6 +9,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
     public class QBitTorrentCommander
     {
         private readonly QBitTorrentUserRetriever userRetriever;
+
         private HttpClient httpClient;
 
         public QBitTorrentCommander(
