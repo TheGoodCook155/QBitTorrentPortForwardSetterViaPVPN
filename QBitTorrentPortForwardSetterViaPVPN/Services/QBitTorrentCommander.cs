@@ -1,35 +1,25 @@
 ﻿
 using QBitTorrentPortForwardSetterViaPVPN.Constants;
 using QBitTorrentPortForwardSetterViaPVPN.Models;
-using System.Net;
-using System.Net.Http;
 
 namespace QBitTorrentPortForwardSetterViaPVPN.Services
 {
     public class QBitTorrentCommander
     {
-        private readonly QBitTorrentUserRetriever userRetriever;
+        private readonly IQBitTorrentUserRetriever userRetriever;
         private HttpClient httpClient;
         private readonly PortForwardingFinder portForwardingFinder;
 
         public QBitTorrentCommander(
-        QBitTorrentUserRetriever userRetriever,
-        PortForwardingFinder portForwardingFinder)
+        IQBitTorrentUserRetriever userRetriever,
+        PortForwardingFinder portForwardingFinder,
+        HttpClient httpClient)
         {
             this.userRetriever = userRetriever;
 
             this.portForwardingFinder = portForwardingFinder;
 
-            var handler = new HttpClientHandler
-            {
-                UseCookies = true,
-                CookieContainer = new CookieContainer()
-            };
-
-            this.httpClient = new HttpClient(handler)
-            {
-                BaseAddress = new Uri(QBitTorrentConstants.BaseAddress)
-            };
+            this.httpClient = httpClient;
         }
 
         public async Task LoginToQBitTorrent()

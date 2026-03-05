@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace QBitTorrentPortForwardSetterViaPVPN.Services
 {
-    public class QBitTorrentUserRetriever
+    public class QBitTorrentUserRetriever : IQBitTorrentUserRetriever
     {
         public QbitTorrentUserModel GetQbitTorrentUserCredentials()
         {
@@ -13,9 +13,9 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
             string configContent = File.ReadAllText(appSettingsPath);
 
-            QbitTorrentUserModel qbitTorrentUser = JsonSerializer.Deserialize<QbitTorrentUserModel>(configContent);
+            QbitTorrentUserModel qbitTorrentUser = JsonSerializer.Deserialize<QbitTorrentUserModel>(configContent)!;
 
-            return qbitTorrentUser;
+            return qbitTorrentUser!;
         }
     }
 }

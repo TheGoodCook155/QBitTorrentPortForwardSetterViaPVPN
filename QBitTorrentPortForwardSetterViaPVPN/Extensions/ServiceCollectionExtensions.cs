@@ -2,60 +2,73 @@
 using QBitTorrentPortForwardSetterViaPVPN.Constants;
 using QBitTorrentPortForwardSetterViaPVPN.Helpers;
 using QBitTorrentPortForwardSetterViaPVPN.Services;
+using System.Net;
 
 namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
 {
-    public static class ServiceCollectionExtensions
+    public static class IServiceCollectionExtensions
     {
-        public static ServiceCollection AddApp(this ServiceCollection @this)
+        public static IServiceCollection AddApp(this IServiceCollection @this)
         {
             @this.AddScoped<App>();
             return @this;
         }
 
-        public static ServiceCollection AddLogCopyService(this ServiceCollection @this)
+        public static IServiceCollection AddLogCopyService(this IServiceCollection @this)
         {
             @this.AddScoped<PvpnLogCopy>();
             return @this;
         }
 
 
-        public static ServiceCollection AddPathConstants(this ServiceCollection @this)
+        public static IServiceCollection AddPathConstants(this IServiceCollection @this)
         {
             @this.AddScoped<PathConstants>();
             return @this;
         }
 
 
-        public static ServiceCollection AddPvpnFolderMonitor(this ServiceCollection @this)
-        {
-            @this.AddScoped<PvpnFolderMonitor>();
-            return @this;
-        }
-
-
-        public static ServiceCollection AddLogsHelpers(this ServiceCollection @this)
+        public static IServiceCollection AddLogsHelpers(this IServiceCollection @this)
         {
             @this.AddScoped<LogsHelper>();
             return @this;
         }
 
 
-        public static ServiceCollection AddPortForwardedFinder(this ServiceCollection @this)
+        public static IServiceCollection AddPortForwardedFinder(this IServiceCollection @this)
         {
             @this.AddScoped<PortForwardingFinder>();
             return @this;
         }
 
-        public static ServiceCollection AddQbitTorrentUserRetriever(this ServiceCollection @this)
+        public static IServiceCollection AddQbitTorrentUserRetriever(this IServiceCollection @this)
         {
-            @this.AddScoped<QBitTorrentUserRetriever>();
-            return @this;   
+            @this.AddScoped<IQBitTorrentUserRetriever, QBitTorrentUserRetriever>();
+            return @this;
         }
 
-        public static ServiceCollection AddQbitTorrentCommander(this ServiceCollection @this)
+        public static IServiceCollection AddQbitTorrentCommander(this IServiceCollection @this)
         {
             @this.AddScoped<QBitTorrentCommander>();
+            return @this;
+        }
+
+        public static IServiceCollection AddHttpClient(this IServiceCollection @this)
+        {
+            @this.AddSingleton<HttpClient>(serviceProvider =>
+            {
+                var handler = new HttpClientHandler
+                {
+                    UseCookies = true,
+                    CookieContainer = new CookieContainer()
+                };
+
+                return new HttpClient(handler)
+                {
+                    BaseAddress = new Uri(QBitTorrentConstants.BaseAddress)
+                };
+            });
+
             return @this;
         }
     }
