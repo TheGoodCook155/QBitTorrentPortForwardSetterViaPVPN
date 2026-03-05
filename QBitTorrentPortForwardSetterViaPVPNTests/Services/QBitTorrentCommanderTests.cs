@@ -46,7 +46,7 @@ namespace QBitTorrentPortForwardSetterViaPVPNTests.Services
 
             this.MockQbitTorrentUserRetriever("testUsername", "TestPassword");
 
-            this.qBitTorrentCommander = new QBitTorrentCommander(qBitTorrentUserRetriever.Object, portForwardingFinder!,null);
+            this.qBitTorrentCommander = new QBitTorrentCommander(qBitTorrentUserRetriever.Object, portForwardingFinder!,this.httpClient!);
         }
 
         [Fact]
