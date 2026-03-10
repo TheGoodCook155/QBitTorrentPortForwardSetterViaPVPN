@@ -3,23 +3,24 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 {
     public class App
     {
-        private readonly PvpnLogCopy logCopy;
-        private readonly PortForwardingFinder portForwardingFinder;
+        private readonly IPvpnLogCopy logCopy;
+        private readonly IPortForwardingFinder portForwardingFinder;
         private readonly IQBitTorrentUserRetriever userRetriever;
-        private readonly QBitTorrentCommander commander;
-        private string oldAssignedPort = string.Empty;
+        private readonly IQBitTorrentCommander commander;
+        public virtual string OldAssignedPort { get; set; } = string.Empty;
+        private CancellationTokenSource cancellationTokenSource;
 
-        private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
-        public App(PvpnLogCopy logCopy,
-            PortForwardingFinder portForwardingFinder,
+        public App(IPvpnLogCopy logCopy,
+            IPortForwardingFinder portForwardingFinder,
             IQBitTorrentUserRetriever userRetriever,
-            QBitTorrentCommander commander)
+            IQBitTorrentCommander commander,
+            CancellationTokenSource cancellationTokenSource)
         {
             this.logCopy = logCopy;
             this.portForwardingFinder = portForwardingFinder;
             this.userRetriever = userRetriever;
             this.commander = commander;
+            this.cancellationTokenSource = cancellationTokenSource;
         }
 
         public async Task Run()
@@ -44,11 +45,11 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
                     continue;
                 }
 
-                if (oldAssignedPort != newPort)
+                if (OldAssignedPort != newPort)
                 {
-                    Console.WriteLine($"Last port change found: {oldAssignedPort} -> {newPort}");
+                    Console.WriteLine($"Last port change found: {OldAssignedPort} -> {newPort}");
 
-                    oldAssignedPort = newPort;
+                    OldAssignedPort = newPort;
                 }
                 else
                 {

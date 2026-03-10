@@ -16,7 +16,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
 
         public static IServiceCollection AddLogCopyService(this IServiceCollection @this)
         {
-            @this.AddScoped<PvpnLogCopy>();
+            @this.AddScoped<IPvpnLogCopy, PvpnLogCopy>();
             return @this;
         }
 
@@ -37,7 +37,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
 
         public static IServiceCollection AddPortForwardedFinder(this IServiceCollection @this)
         {
-            @this.AddScoped<PortForwardingFinder>();
+            @this.AddScoped<IPortForwardingFinder, PortForwardingFinder>();
             return @this;
         }
 
@@ -49,7 +49,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
 
         public static IServiceCollection AddQbitTorrentCommander(this IServiceCollection @this)
         {
-            @this.AddScoped<QBitTorrentCommander>();
+            @this.AddScoped<IQBitTorrentCommander, QBitTorrentCommander>();
             return @this;
         }
 
@@ -69,6 +69,12 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
                 };
             });
 
+            return @this;
+        }
+
+        public static IServiceCollection AddCancellationTokenSource(this IServiceCollection @this)
+        {
+            @this.AddSingleton<CancellationTokenSource>();
             return @this;
         }
     }

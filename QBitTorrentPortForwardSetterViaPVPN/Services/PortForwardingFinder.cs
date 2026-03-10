@@ -4,11 +4,11 @@ using System.Text.RegularExpressions;
 
 namespace QBitTorrentPortForwardSetterViaPVPN.Services
 {
-    public class PortForwardingFinder
+    public class PortForwardingFinder : IPortForwardingFinder
     {
 
         private readonly PathConstants pathConstants;
-        private readonly LogsHelper logHelper;  
+        private readonly LogsHelper logHelper;
 
         public PortForwardingFinder(PathConstants pathConstants, LogsHelper logHelper)
         {
@@ -26,7 +26,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
         private string[] GetLogFiles()
         {
             string path = pathConstants.ProjectPath;
-            
+
             string[] allFiles = logHelper.RetrieveLogs(path);
 
             return allFiles;

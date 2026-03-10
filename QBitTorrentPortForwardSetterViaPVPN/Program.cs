@@ -19,7 +19,8 @@ namespace QBitTorrentPortForwardSetterViaPVPN
                 .AddPortForwardedFinder()
                 .AddQbitTorrentUserRetriever()
                 .AddQbitTorrentCommander()
-                .AddHttpClient();
+                .AddHttpClient()
+                .AddCancellationTokenSource();
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
 

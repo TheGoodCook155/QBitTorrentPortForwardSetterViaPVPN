@@ -4,15 +4,15 @@ using QBitTorrentPortForwardSetterViaPVPN.Models;
 
 namespace QBitTorrentPortForwardSetterViaPVPN.Services
 {
-    public class QBitTorrentCommander
+    public class QBitTorrentCommander : IQBitTorrentCommander
     {
         private readonly IQBitTorrentUserRetriever userRetriever;
         private HttpClient httpClient;
-        private readonly PortForwardingFinder portForwardingFinder;
+        private readonly IPortForwardingFinder portForwardingFinder;
 
         public QBitTorrentCommander(
         IQBitTorrentUserRetriever userRetriever,
-        PortForwardingFinder portForwardingFinder,
+        IPortForwardingFinder portForwardingFinder,
         HttpClient httpClient)
         {
             this.userRetriever = userRetriever;
@@ -37,7 +37,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
             try
             {
                 HttpResponseMessage response = await httpClient.PostAsync(QBitTorrentConstants.LoginEndpoint, content);
-            
+
                 response.EnsureSuccessStatusCode();
 
                 Console.WriteLine($"Log in to qBittorrent Succesfull");
@@ -67,9 +67,9 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
                 Console.WriteLine($"Port set in qBittorrent!");
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Console.WriteLine("Error while assigning new port to qBittorrent Client");            
+                Console.WriteLine("Error while assigning new port to qBittorrent Client");
             }
 
         }

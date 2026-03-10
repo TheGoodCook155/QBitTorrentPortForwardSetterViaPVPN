@@ -1,9 +1,8 @@
 ﻿using QBitTorrentPortForwardSetterViaPVPN.Constants;
 using QBitTorrentPortForwardSetterViaPVPN.Helpers;
-using QBitTorrentPortForwardSetterViaPVPN.Services;
 using System.Diagnostics;
 
-public class PvpnLogCopy
+public class PvpnLogCopy : IPvpnLogCopy
 {
     private string source;
     private string destination;
@@ -52,7 +51,7 @@ public class PvpnLogCopy
         {
             return;
         }
-  
+
         CopyWithXCopy(overwrite);
     }
 
@@ -93,7 +92,7 @@ public class PvpnLogCopy
                     process.Kill();
 
                     Console.WriteLine("XCopy timed out after 60 seconds.");
-                    
+
                     return;
                 }
 
