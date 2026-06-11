@@ -53,6 +53,19 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Constants
             this.PvpnLogsPath = logPath;
         }
 
+        private void SetPathConstantsForLinux() 
+        {
+            string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+            this.LocalApplicationData = string.Empty;
+
+            this.PvpnLogsPath = Path.Combine(home,
+                ".cache",
+                "Proton",
+                "VPN",
+                "logs");
+        }
+
         private void SetPathConstants() 
         { 
             switch (OsVersion) 
@@ -64,7 +77,8 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Constants
                     this.SetPathConstantsForMacOs();
                     break;
                 case Os.Linux:
-                    throw new UnsupportedOsException("Operating system is not supported");
+                    this.SetPathConstantsForLinux();
+                    break;
                 default:
                     throw new UnsupportedOsException("Operating system is not supported");
 

@@ -18,7 +18,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
         {
             #region testing
 #if DEBUG
-            @this.AddScoped<IPvpnLogCopy, PvpnLogMacOsCopy>();
+            @this.AddScoped<IPvpnLogCopy, PvpnLogLinuxCopy>();
             return @this;
 #endif
             #endregion
@@ -29,7 +29,10 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
             }else if (OperatingSystem.IsMacOS()) 
             {
                 @this.AddScoped<IPvpnLogCopy, PvpnLogMacOsCopy>();
-            }else 
+            }else if (OperatingSystem.IsLinux()) 
+            {
+                @this.AddScoped<IPvpnLogCopy, PvpnLogLinuxCopy>();
+            }
             {
                 throw new UnsupportedOsException("Operating System not supported");
             }

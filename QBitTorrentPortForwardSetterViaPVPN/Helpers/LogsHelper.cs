@@ -5,14 +5,17 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Helpers
     {
         public string[] RetrieveLogs(string source)
         {
-            
+
             if (!Directory.Exists(source))
             {
                 throw new Exception($"Source directory not found: {source}");
             }
 
             return Directory
-                    .GetFiles(source, "*.txt", SearchOption.AllDirectories)
+                    .GetFiles(source, "*", SearchOption.AllDirectories)
+                    .Where(f =>
+                    f.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) ||
+                    f.EndsWith(".log", StringComparison.OrdinalIgnoreCase))
                     .OrderBy(f => File.GetLastWriteTimeUtc(f))
                     .ToArray();
         }

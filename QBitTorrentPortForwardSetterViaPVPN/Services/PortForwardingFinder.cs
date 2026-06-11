@@ -46,7 +46,9 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
 
                     foreach (string line in lines)
                     {
-                        if (line.Contains(GeneralConstants.PvpnLogPortEntry))
+
+                        if (line.Contains(GeneralConstants.PvpnLogPortEntryWin)
+                            || line.Contains(GeneralConstants.PvpnLogPortEntryLinux))
                         {
                             allPortEntries.Add(line);
                         }
@@ -67,16 +69,32 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Services
                 return string.Empty;
             }
 
-            Match match = Regex.Match(lastPortEntry, @"from '(\d*)' to '(\d*)'");
+            Match match = null;
+            
+            if (OperatingSystem.IsWindows()) 
+            {
+                match = Regex.Match(lastPortEntry, @"from '(\d*)' to '(\d*)'");
+            }else if (OperatingSystem.IsLinux()) 
+            {
+                match = Regex.Match(lastPortEntry, @"forwarded_port:\s*Some\((\d*)\)");
+            }
 
             string oldPort = string.Empty;
 
             string newPort = string.Empty;
 
-            if (match.Success)
+            if (match!.Success && OperatingSystem.IsWindows())
             {
                 oldPort = match.Groups[1].Value;
+
                 newPort = match.Groups[2].Value;
+
+                return newPort;
+            } else if (match!.Success && OperatingSystem.IsLinux())
+            {
+                oldPort = string.Empty;
+
+                newPort = match.Groups[1].Value;
 
                 return newPort;
             }
