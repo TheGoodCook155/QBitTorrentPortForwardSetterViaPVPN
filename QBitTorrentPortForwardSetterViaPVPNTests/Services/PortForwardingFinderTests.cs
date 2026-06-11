@@ -66,7 +66,7 @@ namespace QBitTorrentPortForwardSetterViaPVPNTests.Services
         {
             string fileName = "log.txt";
 
-            File.WriteAllText(Path.Combine(this.pathConstants.ProjectPath,fileName), GeneralConstants.PvpnLogPortEntry);
+            File.WriteAllText(Path.Combine(this.pathConstants.ProjectPath,fileName), GeneralConstants.PvpnLogPortEntryWin);
 
             Action act = () => this.portForwardingFinder.GetForwardedPort();
 

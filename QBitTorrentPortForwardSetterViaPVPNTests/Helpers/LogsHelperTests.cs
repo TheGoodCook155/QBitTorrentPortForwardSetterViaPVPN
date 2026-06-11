@@ -54,6 +54,21 @@ namespace QBitTorrentPortForwardSetterViaPVPNTests.Helpers
                     new List<string>(){"5.txt","4.txt","3.txt","2.txt","1.txt" },
                     new List<string>(){"5.txt","4.txt","3.txt","2.txt","1.txt" }
                 },
+                new object[]
+                {
+                    new List<string>(){"1.log","2.log","3.log","4.log","5.log" },
+                    new List<string>(){"1.log","2.log","3.log","4.log","5.log" }
+                },
+                new object[]
+                {
+                    new List<string>(){"2.log","1.log","3.log","4.log","5.log" },
+                    new List<string>(){"2.log","1.log","3.log","4.log","5.log" }
+                },
+                new object[]
+                {
+                    new List<string>(){"5.log","4.log","3.log","2.log","1.log" },
+                    new List<string>(){"5.log","4.log","3.log","2.log","1.log" }
+                },
            };
 
         #endregion

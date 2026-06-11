@@ -20,7 +20,7 @@
 
 *Note: For event driven approach (the logic is executed on every log change), please checkout on the 'event-only-version' branch*.
 
-#### Tested with qBittorrent v5.1.0 and ProtonVPN v4.3.11
+#### Tested with qBittorrent v5.1.0 and ProtonVPN v4.3.11 (Windows), qBittorrent v5.2.1 and ProtonVPN v4.16.5 (Mint)
 
 ## Set up ProtonVPN and qBittorrent
 
@@ -42,6 +42,8 @@
 
 ## Configuration
 
+#### You must install .NET 10 Runtime
 #### Before launching the app, you should set the username and password in the appsettings.json file for the Web UI that you already set up in the qBitTorrent application [info](#set-up-protonvpn-and-qbittorrent).
+#### On Windows run QBitTorrentPortForwardSetterViaPVPN.exe, on Linux go to the folder where you downloaded the app, open terminal and run dotnet QBitTorrentPortForwardSetterViaPVPN.dll
 
 ![appsettings.json](images/appsettings-json.png)

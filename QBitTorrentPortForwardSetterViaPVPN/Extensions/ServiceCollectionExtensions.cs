@@ -16,7 +16,27 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
 
         public static IServiceCollection AddLogCopyService(this IServiceCollection @this)
         {
-            @this.AddScoped<IPvpnLogCopy, PvpnLogCopy>();
+            #region testing
+#if DEBUG
+            @this.AddScoped<IPvpnLogCopy, PvpnLogLinuxCopy>();
+            return @this;
+#endif
+            #endregion
+
+            if (OperatingSystem.IsWindows()) 
+            {
+                @this.AddScoped<IPvpnLogCopy, PvpnLogWindowsCopy>();
+            }else if (OperatingSystem.IsMacOS()) 
+            {
+                @this.AddScoped<IPvpnLogCopy, PvpnLogMacOsCopy>();
+            }else if (OperatingSystem.IsLinux()) 
+            {
+                @this.AddScoped<IPvpnLogCopy, PvpnLogLinuxCopy>();
+            }
+            {
+                throw new UnsupportedOsException("Operating System not supported");
+            }
+
             return @this;
         }
 

@@ -1,56 +1,18 @@
 ﻿using QBitTorrentPortForwardSetterViaPVPN.Constants;
 using QBitTorrentPortForwardSetterViaPVPN.Helpers;
+using QBitTorrentPortForwardSetterViaPVPN.Services;
 using System.Diagnostics;
 
-public class PvpnLogCopy : IPvpnLogCopy
+public sealed class PvpnLogWindowsCopy : PvpnLogCopyBase
 {
-    private string source;
-    private string destination;
-    private string projectPath;
-    public string SourceDirectory => source;
-    public string DestinationDirectory => destination;
-    public string ProjectPath => projectPath;
-
-    private readonly PathConstants pathConstants;
-    private readonly LogsHelper logHelpers;
-
-    public PvpnLogCopy(PathConstants pathConstants, LogsHelper logsHelper)
+    public PvpnLogWindowsCopy(PathConstants pathConstants, LogsHelper logsHelper) 
+        : base(pathConstants, logsHelper)
     {
-        this.pathConstants = pathConstants;
-
-        this.logHelpers = logsHelper;
-
-        this.InitSource();
-
-        this.InitDestination(projectPath!);
     }
 
-    private void InitSource()
+    public override void CopyLogsToProject(bool overwrite = true)
     {
-        this.source = pathConstants.PvpnLogsPath;
-    }
-
-    private void InitDestination(string projectPath = "")
-    {
-        if (string.IsNullOrEmpty(projectPath))
-        {
-            projectPath = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
-        }
-
-        this.destination = Path.Combine(projectPath, "VPN_Logs");
-        this.projectPath = projectPath;
-
-        Directory.CreateDirectory(destination);
-    }
-
-    public void CopyLogsToProject(bool overwrite = true)
-    {
-        string[] allLogFiles = this.logHelpers.RetrieveLogs(this.source);
-
-        if (allLogFiles.Length == 0)
-        {
-            return;
-        }
+        base.CopyLogsToProject(overwrite);
 
         CopyWithXCopy(overwrite);
     }
