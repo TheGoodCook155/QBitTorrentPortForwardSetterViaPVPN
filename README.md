@@ -44,6 +44,9 @@
 
 #### You must install .NET 10 Runtime
 #### Before launching the app, you should set the username and password in the appsettings.json file for the Web UI that you already set up in the qBitTorrent application [info](#set-up-protonvpn-and-qbittorrent).
-#### On Windows run QBitTorrentPortForwardSetterViaPVPN.exe, on Linux go to the folder where you downloaded the app, open terminal and run dotnet QBitTorrentPortForwardSetterViaPVPN.dll
+#### On Windows run QBitTorrentPortForwardSetterViaPVPN.exe, on Linux go to the folder where you downloaded the app, open terminal and run 
+```csharp
+dotnet QBitTorrentPortForwardSetterViaPVPN.dll
+```
 
 ![appsettings.json](images/appsettings-json.png)
