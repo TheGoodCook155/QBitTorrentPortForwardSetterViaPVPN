@@ -32,7 +32,7 @@ namespace QBitTorrentPortForwardSetterViaPVPN.Extensions
             }else if (OperatingSystem.IsLinux()) 
             {
                 @this.AddScoped<IPvpnLogCopy, PvpnLogLinuxCopy>();
-            }
+            } else
             {
                 throw new UnsupportedOsException("Operating System not supported");
             }
